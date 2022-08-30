@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Swagger Kafka Producer - OpenAPI 3.0
+  description: |-
+    This is a sample Producer Kafka API Rest based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+    That way, with time, we can improve the API in general, and expose some of the new features in OAS3. 
+
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://localhost:8081/api/v3
+tags:
+  - name: producer
+    description: Kafka producer messages
+
+paths:
+  /send:
+    post:
+      tags:
+        - producer
+      summary: Send a message to Kafka topics
+      description: Send a new message to a kafka topic
+      operationId: send
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '405':
+          description: Invalid input
+components:
+  schemas:
+    CustomMessage:
+      required:
+        - topic
+        - message
+      type: object
+      properties:
+        topic:
+          type: string
+          example: a-example-topic
+        message:
+          type: string
+          example: A custom message to send
+  requestBodies:
+    CustomMessage:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomMessage'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/CustomMessage'

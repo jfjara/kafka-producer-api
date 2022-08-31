@@ -1,18 +1,18 @@
 package com.jfjara.producer.kafka.client;
 
+import com.jfjara.producer.dto.KafkaProducerMessageDto;
 import com.jfjara.producer.kafka.factory.KafkaProducerFactory;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.apache.kafka.clients.producer.KafkaProducer;
 
 import java.util.Properties;
 import java.util.concurrent.Future;
-
-import org.apache.kafka.clients.producer.ProducerRecord;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -36,7 +36,11 @@ public class KafkaProducerClientTest {
         when(kafkaProducerFactory.getInstance(any())).thenReturn(kafkaProducer);
         when(kafkaProducer.send(any())).thenReturn(futureResponse);
         doNothing().when(kafkaProducer).close();
-        kafkaProducerClient.send("aTopic", "aKey", "aMessage");
+        kafkaProducerClient.send(KafkaProducerMessageDto.builder()
+                .topic("aTopic")
+                .key("aKey")
+                .message("aMessage")
+                .build());
         verify(kafkaProducerFactory, times(1)).getInstance(isA(Properties.class));
         verify(kafkaProducer, times(1)).send(isA(ProducerRecord.class));
     }

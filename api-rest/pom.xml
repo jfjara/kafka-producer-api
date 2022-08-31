@@ -22,7 +22,13 @@
         <dependency>
             <groupId>com.jfjara.producer</groupId>
             <artifactId>application</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jfjara.producer</groupId>
+            <artifactId>domain</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>
@@ -65,7 +71,13 @@
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
-            <version>0.2.1</version>
+            <version>0.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
         </dependency>
 
     </dependencies>

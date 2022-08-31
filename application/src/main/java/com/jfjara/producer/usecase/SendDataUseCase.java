@@ -1,6 +1,7 @@
 package com.jfjara.producer.usecase;
 
-import com.jfjara.producer.repository.ProducerRepository;
+import com.jfjara.producer.dto.KafkaProducerMessageDto;
+import com.jfjara.producer.ports.ProducerRepository;
 
 public class SendDataUseCase {
     private final ProducerRepository producerRepository;
@@ -9,8 +10,8 @@ public class SendDataUseCase {
         this.producerRepository = producerRepository;
     }
 
-    public void execute(final String topic, final String key, final String value) {
-        producerRepository.send(topic, key, value);
+    public void execute(final KafkaProducerMessageDto kafkaProducerMessageDto) {
+        producerRepository.send(kafkaProducerMessageDto);
     }
 
 }

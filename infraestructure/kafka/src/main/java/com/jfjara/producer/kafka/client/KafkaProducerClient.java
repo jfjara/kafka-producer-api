@@ -1,5 +1,6 @@
 package com.jfjara.producer.kafka.client;
 
+import com.jfjara.producer.dto.KafkaProducerMessageDto;
 import com.jfjara.producer.kafka.factory.KafkaProducerFactory;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -23,10 +24,12 @@ public class KafkaProducerClient {
     @Autowired
     private KafkaProducerFactory kafkaProducerFactory;
 
-    public void send(final String topic, final String key, final String value) {
-        logger.info("Kafka producer send to topic {} key {} value {}", topic, key, value);
+    public void send(final KafkaProducerMessageDto kafkaProducerMessageDto) {
+        logger.info("Kafka producer send message {}", kafkaProducerMessageDto);
         final KafkaProducer<String, String> producer = kafkaProducerFactory.getInstance(producerConfig);
-        producer.send(new ProducerRecord<>(topic, key, value));
+        producer.send(new ProducerRecord<>(kafkaProducerMessageDto.getTopic(),
+                kafkaProducerMessageDto.getKey(),
+                kafkaProducerMessageDto.getMessage()));
         producer.close();
     }
 

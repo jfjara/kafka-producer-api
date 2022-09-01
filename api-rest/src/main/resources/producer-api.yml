@@ -24,13 +24,68 @@ tags:
     description: Kafka producer messages
 
 paths:
-  /send:
+  /send/without-confirm:
     post:
       tags:
         - producer
       summary: Send a message to Kafka topics
-      description: Send a new message to a kafka topic
-      operationId: send
+      description: Send a new message to a kafka topic without confirm
+      operationId: sendWithoutConfirm
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '405':
+          description: Invalid input
+  /send/with-confirm:
+    post:
+      tags:
+        - producer
+      summary: Send a message to Kafka topics
+      description: Send a new message to a kafka topic with confirm, return a offset
+      operationId: sendWithConfirm
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomMessage'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            'application/json':
+              schema:
+                type: integer
+                format: int64
+        '405':
+          description: Invalid input
+  /send/asynchronous:
+    post:
+      tags:
+        - producer
+      summary: Send a message to Kafka topics
+      description: Send a new message to a kafka topic asynchronous
+      operationId: sendAsynchronous
       requestBody:
         description: Create a new pet in the store
         content:

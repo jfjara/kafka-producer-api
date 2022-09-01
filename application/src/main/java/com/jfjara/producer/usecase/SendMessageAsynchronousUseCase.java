@@ -3,15 +3,18 @@ package com.jfjara.producer.usecase;
 import com.jfjara.producer.dto.KafkaProducerMessageDto;
 import com.jfjara.producer.ports.ProducerRepository;
 
-public class SendDataUseCase {
+import java.util.concurrent.ExecutionException;
+
+public class SendMessageAsynchronousUseCase {
+
     private final ProducerRepository producerRepository;
 
-    public SendDataUseCase(final ProducerRepository producerRepository) {
+    public SendMessageAsynchronousUseCase(final ProducerRepository producerRepository) {
         this.producerRepository = producerRepository;
     }
 
     public void execute(final KafkaProducerMessageDto kafkaProducerMessageDto) {
-        producerRepository.send(kafkaProducerMessageDto);
+        producerRepository.sendAsynchronous(kafkaProducerMessageDto);
     }
 
 }
